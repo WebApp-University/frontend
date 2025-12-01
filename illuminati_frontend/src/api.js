@@ -9,7 +9,7 @@ const API_BASE = import.meta.env.VITE_API_BASE;
 
 const client = axios.create({
     baseURL: API_BASE,
-    timeout: 5000,
+    timeout: 15000,
 });
 
 
@@ -54,8 +54,13 @@ export async function getTaskDetail(id) {
 
 
 export async function getMyTasks() {
-    const res = await client.get("/api/calculations/tasks/my/");
-    return res.data;
+    try {
+        const res = await client.get("/api/calculations/tasks/my/");
+        return res.data;
+    } catch (err) {
+        console.error("Failed to load tasks:", err);
+        return [];
+    }
 }
 
 
